@@ -8,7 +8,7 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  signIn(@Body() body: SignInDto) {
+  async signIn(@Body() body: SignInDto): Promise<{ token: string}> {
     return this.authService.generateToken(body.phone);
   }
 }

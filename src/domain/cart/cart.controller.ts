@@ -12,6 +12,7 @@ import { AuthGuard } from 'src/domain/auth/auth.guard';
 import { RemoveCartItemDto, UpsertCartDto } from './cart.dto';
 import { CartService } from './cart.service';
 import { Request } from 'express';
+import { Cart } from '@prisma/client';
 
 @Controller('carts')
 @UseGuards(AuthGuard)
@@ -20,24 +21,25 @@ export class CartController {
 
   @Post()
   @HttpCode(201)
-  upsert(@Body() body: UpsertCartDto, @Req() request: Request) {
+  async upsert(@Body() body: UpsertCartDto, @Req() request: Request): Promise<Cart> {
     const payload = {
       userId: request['userId'],
       ...body,
     };
-    return this.cartService.upsert(payload);
+    return await this.cartService.upsert(payload);
   }
 
   @Get()
   @HttpCode(200)
-  find(@Req() request: Request) {
+  async find(@Req() request: Request): Promise<Cart | {}> {
     const userId = request['userId'];
-    return this.cartService.findByUserId(userId);
+    const result = await this.cartService.findByUserId(userId) 
+    return result || {};
   }
 
   @Delete()
   @HttpCode(204)
-  removeCartItem(@Body() body: RemoveCartItemDto, @Req() request: Request) {
+  async removeCartItem(@Body() body: RemoveCartItemDto, @Req() request: Request): Promise<void> {
     const payload = {
       userId: request['userId'],
       ...body,
