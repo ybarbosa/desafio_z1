@@ -1,10 +1,23 @@
-version: '3.8'
-
 networks:
   default:
     name: 'z1'
 
-services: 
+services:
+  app: 
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${PORT}:${PORT}
+    command: yarn start:dev
+    env_file:
+      - .env
+    depends_on:
+      redis:
+        condition: service_healthy
+      db:
+        condition: service_healthy
   db:
     image: postgres:15.4-alpine
     container_name: db
@@ -18,9 +31,6 @@ services:
       interval: 1s
       timeout: 5s
       retries: 5
-    depends_on:
-      redis:
-        condition: service_started
   redis:
     image: 'redis:alpine'
     ports:
