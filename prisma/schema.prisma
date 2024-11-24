@@ -46,7 +46,6 @@ model Product {
   name    String 
   description   String
   price Int
-  picture String
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
   order_item Order_Item[]
