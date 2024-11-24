@@ -20,8 +20,8 @@ enum CartStatus {
 
 model User {
   id    Int    @id @default(autoincrement()) 
-  phone String  @unique
-  name  String
+  phone String  @db.VarChar(16) @unique
+  name  String @db.VarChar(255)
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
   cart Cart[]
@@ -33,6 +33,7 @@ model Order {
   status    OrderStatus 
   cart_id   Int @unique
   user_id Int
+  reason_error String? @db.VarChar(255)
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
@@ -43,8 +44,8 @@ model Order {
 
 model Product {
   id        Int   @id @default(autoincrement()) 
-  name    String 
-  description   String
+  name    String  @db.VarChar(255)
+  description   String @db.VarChar(255)
   price Int
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
