@@ -178,4 +178,21 @@ export class OrderService extends WorkerHost {
       }
     })
   }
+
+  async findByUserId(userId: number){
+    try {
+      const orders = await this.prismaService.order.findMany({
+        where: {
+          user_id: userId
+        },
+        include: {
+          order_items: true
+        }
+      })
+
+      return orders
+    } catch {
+      throw new BadRequestException('Error on find orders')
+    }
+  }
 }
