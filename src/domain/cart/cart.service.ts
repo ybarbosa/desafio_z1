@@ -60,15 +60,15 @@ export class CartService {
   }): Promise<Cart_item> {
     return this.prismaService.cart_item.upsert({
       where: {
-        card_id_product_id: {
-          card_id: params.cartId,
+        cart_id_product_id: {
+          cart_id: params.cartId,
           product_id: params.productId,
         },
       },
       create: {
         quantity: params.quantity,
         product_id: params.productId,
-        card_id: params.cartId,
+        cart_id: params.cartId,
       },
 
       update: {
@@ -87,9 +87,9 @@ export class CartService {
 
     await this.prismaService.cart_item.delete({
       where: {
-        card_id_product_id: {
+        cart_id_product_id: {
           product_id: params.product_id,
-          card_id: cart.id,
+          cart_id: cart.id,
         },
       },
     });

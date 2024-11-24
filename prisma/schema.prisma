@@ -89,13 +89,13 @@ model Cart {
 
 
 model Cart_item {
-  card_id Int
+  cart_id Int
   product_id Int
   quantity Int
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  cart      Cart @relation(fields: [card_id], references: [id])
-  @@id([card_id, product_id])
+  cart      Cart @relation(fields: [cart_id], references: [id])
+  @@id([cart_id, product_id])
 }
