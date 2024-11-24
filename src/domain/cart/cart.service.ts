@@ -78,7 +78,7 @@ export class CartService {
     });
   }
 
-  async remove(params: RemoveCartItemDto & { userId: number }): Promise<void> {
+  async removeCartItem(params: RemoveCartItemDto & { userId: number }): Promise<void> {
     const cart = await this.findByUserId(params.userId);
 
     if (!cart) {
@@ -95,28 +95,14 @@ export class CartService {
     });
   }
 
-  async find(userId: number): Promise<Cart & { quantityItems: number }> {
+  async find(userId: number): Promise<Cart> {
     const cart = await this.findByUserId(userId);
 
     if (!cart) {
       throw new NotFoundException('cart not found');
     }
 
-    const {
-      _sum: { quantity: sumQuantityItem },
-    } = await this.prismaService.cart_item.aggregate({
-      where: {
-        card_id: cart.id,
-      },
-      _sum: {
-        quantity: true,
-      },
-    });
-
-    return {
-      ...cart,
-      quantityItems: sumQuantityItem,
-    };
+    return  cart;
   }
   async findByUserId(userId: number): Promise<Cart> {
     try {

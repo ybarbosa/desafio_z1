@@ -37,12 +37,12 @@ export class CartController {
 
   @Delete()
   @HttpCode(204)
-  remove(@Body() body: RemoveCartItemDto, @Req() request: Request) {
+  removeCartItem(@Body() body: RemoveCartItemDto, @Req() request: Request) {
     const payload = {
       userId: request['userId'],
       ...body,
     };
 
-    return this.cartService.remove(payload);
+    return this.cartService.removeCartItem(payload);
   }
 }
