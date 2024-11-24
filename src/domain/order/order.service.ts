@@ -108,18 +108,17 @@ export class OrderService extends WorkerHost {
           })
         },
       );
-    } catch {
+    } catch(error) {
       await this.prismaService.order.update({
         where: {
           id: orderId,
         },
         data: {
           status: OrderStatus.ERROR,
+          reason_error: error.message,
           updated_at: new Date(),
         },
       });
-
-      throw new Error(`${OrderService.name}: Erro on processing order`);
     }
   }
 
@@ -147,7 +146,7 @@ export class OrderService extends WorkerHost {
         product_id: item.product_id,
       },
     });
-    
+
     if (item.quantity > inventory.quantity) {
       throw new Error(
         'Order cannot be processed due to insufficient inventory',
