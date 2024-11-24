@@ -147,11 +147,7 @@ export class OrderService extends WorkerHost {
         product_id: item.product_id,
       },
     });
-
-    if (!inventory.quantity) {
-      throw new Error('Inventory empty');
-    }
-
+    
     if (item.quantity > inventory.quantity) {
       throw new Error(
         'Order cannot be processed due to insufficient inventory',
