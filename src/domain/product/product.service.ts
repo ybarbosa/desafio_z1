@@ -12,7 +12,6 @@ export class ProductService {
         id: true,
         name: true,
         description: true,
-        picture: true,
         updated_at: true,
         created_at: true,
         inventory: {

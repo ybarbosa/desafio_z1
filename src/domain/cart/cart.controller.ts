@@ -32,7 +32,7 @@ export class CartController {
   @HttpCode(200)
   find(@Req() request: Request) {
     const userId = request['userId'];
-    return this.cartService.find(userId);
+    return this.cartService.findByUserId(userId);
   }
 
   @Delete()

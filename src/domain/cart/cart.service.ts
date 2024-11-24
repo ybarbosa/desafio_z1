@@ -95,21 +95,12 @@ export class CartService {
     });
   }
 
-  async find(userId: number): Promise<Cart> {
-    const cart = await this.findByUserId(userId);
-
-    if (!cart) {
-      throw new NotFoundException('cart not found');
-    }
-
-    return  cart;
-  }
   async findByUserId(userId: number): Promise<Cart> {
     try {
       const cart: Cart = await this.prismaService.cart.findFirst({
         where: {
           user_id: userId,
-          status: 'ACTIVE',
+          status: CartStatus.ACTIVE,
         },
         include: {
           cart_item: true,
