@@ -9,7 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from 'src/domain/auth/auth.guard';
-import { RemoveCartItemDto, UpsertCartDto } from './index.dto';
+import { RemoveCartItemDto, UpsertCartDto } from './cart.dto';
 import { CartService } from './cart.service';
 import { Request } from 'express';
 

@@ -4,7 +4,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma/prisma.service';
-import { RemoveCartItemDto, UpsertCartDto } from './index.dto';
+import { RemoveCartItemDto, UpsertCartDto } from './cart.dto';
 import { Cart, Cart_item, CartStatus, Product } from '@prisma/client';
 
 @Injectable()
