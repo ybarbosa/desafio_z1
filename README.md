@@ -8,7 +8,7 @@ cp .env.example .env
 Install Yarn and the project dependencies
 
 ```bash
-docker compose up
+docker compose up app -d
 ```
 
 ## Running without docker
