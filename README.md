@@ -23,16 +23,23 @@ yarn npx prisma generate
 Ensure that redis and postgres host settings are configured to point to localhost.
 
 
-
 ## Migrations and seed
-Running migrations and seeds without docker
+
+#### Without docker
+Run command
 ```bash
 yarn prisma:start
 ```
 
+#### With docker
+Run command:
+```bash
+docker-compose exec -d app yarn prisma:start
+```
 
 ## Architecture Overview
 Entity Relationship Diagram (ERD)
 ![](https://i.ibb.co/vjCQxSz/estrutura-db.jpg)
 
 Solution
+![](https://i.ibb.co/bznFnZ3/fluxo-z1.jpg)
