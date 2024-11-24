@@ -24,7 +24,7 @@ Ensure that redis and postgres host settings are configured to point to localhos
 
 
 ## Migrations and seed
-
+Running migrations and seed
 #### Without docker
 Run command
 ```bash
@@ -37,9 +37,14 @@ Run command:
 docker-compose exec -d app yarn prisma:start
 ```
 
+#### Obs
+Only */login* endpoint is open. To facilitate the use of the project, a default user is created. It is recommended to use it, or feel free to create another user via SQL.
+User default:
+![](https://i.ibb.co/PG1fvSY/Captura-de-tela-2024-11-24-152541.png)
+
 ## Architecture Overview
-Entity Relationship Diagram (ERD)
+###### Entity Relationship Diagram
 ![](https://i.ibb.co/vjCQxSz/estrutura-db.jpg)
 
-Solution
+###### Solution
 ![](https://i.ibb.co/bznFnZ3/fluxo-z1.jpg)
