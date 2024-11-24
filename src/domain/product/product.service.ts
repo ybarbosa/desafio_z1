@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/domain/prisma/prisma.service';
+import { PrismaService } from 'src/database/prisma/prisma.service';
 
 @Injectable()
 export class ProductService {

@@ -11,7 +11,7 @@ import {
   Product,
 } from '@prisma/client';
 import { Job, Queue } from 'bullmq';
-import { PrismaService } from 'src/domain/prisma/prisma.service';
+import { PrismaService } from 'src/database/prisma/prisma.service';
 
 type DataUpdateOrder = {
   orderId: number;
