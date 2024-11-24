@@ -117,8 +117,8 @@ export class CartService {
     quantity: number;
     userId: number;
   }): Promise<Cart> {
-    if (params.quantity < 0) {
-      throw new BadRequestException('Quantity cannot be negative');
+    if (params.quantity < 1) {
+      throw new BadRequestException('Quantity must be greater than or equal to 1');
     }
     try {
       return await this.prismaService.cart.create({
