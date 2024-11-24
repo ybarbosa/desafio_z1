@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum OrderStatus {
+  PENDING
+  ERROR
+  FINISHED
+}
+
+enum CartStatus {
+  ACTIVE
+  FINISHED
+}
+
+model User {
+  id    Int    @id @default(autoincrement()) 
+  phone String  @unique
+  name  String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  cart Cart[]
+  order Order[]
+}
+
+model Order {
+  id        Int   @id @default(autoincrement()) 
+  status    OrderStatus 
+  cart_id   Int @unique
+  user_id Int
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  cart      Cart @relation(fields: [cart_id], references: [id])
+  user      User @relation(fields: [user_id], references: [id])
+  order_items Order_Item[]
+}
+
+model Product {
+  id        Int   @id @default(autoincrement()) 
+  name    String 
+  description   String
+  price Int
+  picture String
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  order_item Order_Item[]
+  inventory Inventory?
+}
+
+model Order_Item {
+  id        Int   @id @default(autoincrement())
+  order_id Int
+  product_id Int
+  quantity Int
+  price Int
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  order   Order @relation(fields: [order_id], references: [id])
+  product Product @relation(fields: [product_id], references: [id])
+}
+
+model Inventory {
+  id        Int   @id @default(autoincrement())
+  product_id Int  @unique
+  quantity Int 
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  product Product @relation(fields: [product_id], references: [id])
+}
+
+model Cart {
+  id  Int   @id @default(autoincrement())
+  status CartStatus
+  user_id Int
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  user      User @relation(fields: [user_id], references: [id])
+  cart_item Cart_item[]
+  order Order?
+}
+
+
+model Cart_item {
+  card_id Int
+  product_id Int
+  quantity Int
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  cart      Cart @relation(fields: [card_id], references: [id])
+  @@id([card_id, product_id])
+}
