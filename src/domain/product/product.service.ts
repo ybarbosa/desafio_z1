@@ -11,6 +11,7 @@ export class ProductService {
       select: {
         id: true,
         name: true,
+        price: true,
         description: true,
         updated_at: true,
         created_at: true,
