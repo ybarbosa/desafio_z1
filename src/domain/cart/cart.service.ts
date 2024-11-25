@@ -4,13 +4,13 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/database/prisma/prisma.service';
-import { RemoveCartItemDto, UpsertCartDto } from './cart.dto';
 import { Cart, Cart_item, CartStatus, Product } from '@prisma/client';
+import { upsertCart, removeCartItem } from './cart.types';
 
 @Injectable()
 export class CartService {
   constructor(private prismaService: PrismaService) {}
-  async upsert(params: UpsertCartDto & { userId: number }): Promise<Cart> {
+  async upsert(params: upsertCart ): Promise<Cart> {
     if (params.quantity < 1) {
       throw new BadRequestException('Quantity must be greater than or equal to 1');
     }
@@ -36,7 +36,7 @@ export class CartService {
     return await this.update({ ...params, cart });
   }
 
-  async update(params: UpsertCartDto & { cart: Cart }): Promise<Cart> {
+  async update(params: upsertCart & { cart: Cart }): Promise<Cart> {
     try {
       await this.upsertCartItem({
         cartId: params.cart.id,
@@ -82,7 +82,7 @@ export class CartService {
     });
   }
 
-  async removeCartItem(params: RemoveCartItemDto & { userId: number }): Promise<void> {
+  async removeCartItem(params:removeCartItem): Promise<void> {
     const cart = await this.findByUserId(params.userId);
 
     if (!cart) {

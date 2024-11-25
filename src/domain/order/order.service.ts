@@ -31,7 +31,7 @@ export class OrderService extends WorkerHost {
     update: (data: DataUpdateOrder) => this.update(data.orderId),
   };
 
-  async create(userId: number) {
+  async create(userId: number): Promise<Order> {
     try {
       const cart = await this.prismaService.cart.findFirstOrThrow({
         where: {
