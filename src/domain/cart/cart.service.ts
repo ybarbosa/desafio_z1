@@ -33,6 +33,10 @@ export class CartService {
   }
 
   async update(params: UpsertCartDto & { cart: Cart }): Promise<Cart> {
+    if (params.quantity < 1) {
+      throw new BadRequestException('Quantity must be greater than or equal to 1');
+    }
+
     try {
       await this.upsertCartItem({
         cartId: params.cart.id,
@@ -85,11 +89,27 @@ export class CartService {
       throw new NotFoundException('Cart not found');
     }
 
+    const cartItem = await this.prismaService.cart_item.findFirst({
+      where: {
+        cart_id: cart.id,
+        product_id: params.product_id
+      },
+      select: {
+        cart_id: true,
+        product_id: true
+      }
+    })
+
+    if(!cartItem) {
+      throw new NotFoundException('cartItem not found');
+    }
+
+
     await this.prismaService.cart_item.delete({
       where: {
         cart_id_product_id: {
-          product_id: params.product_id,
-          cart_id: cart.id,
+          product_id: cartItem.product_id,
+          cart_id: cartItem.cart_id,
         },
       },
     });
