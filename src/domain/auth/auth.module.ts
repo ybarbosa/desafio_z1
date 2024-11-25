@@ -9,8 +9,8 @@ import { AuthService } from './auth.service';
       global: true,
       secret: process.env.JWT_SECRET,
       signOptions: {
-        expiresIn: '1d'
-      }
+        expiresIn: '1d',
+      },
     }),
   ],
   controllers: [AuthController],

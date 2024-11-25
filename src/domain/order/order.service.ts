@@ -41,11 +41,13 @@ export class OrderService extends WorkerHost {
       });
 
       const [order]: [Order, Cart] = await this.prismaService.$transaction([
-        this.prismaService.order.create({ data: {
-          status: OrderStatus.PENDING,
-          cart_id: cart.id,
-          user_id: userId
-        } }),
+        this.prismaService.order.create({
+          data: {
+            status: OrderStatus.PENDING,
+            cart_id: cart.id,
+            user_id: userId,
+          },
+        }),
         this.prismaService.cart.update({
           where: { id: cart.id },
           data: { status: CartStatus.FINISHED, updated_at: new Date() },
@@ -60,32 +62,31 @@ export class OrderService extends WorkerHost {
 
       return order;
     } catch (error) {
-      throw new BadRequestException('Order creation failed')
+      throw new BadRequestException('Order creation failed');
     }
   }
 
   async update(orderId: number) {
     try {
-      const { cart } = await this.prismaService.order
-        .findUniqueOrThrow({
-          where: {
-            id: orderId,
-            status: OrderStatus.PENDING
-          },
-          select: {
-            id: true,
-            cart: {
-              select: {
-                cart_item: {
-                  select: {
-                    product_id: true,
-                    quantity: true,
-                  },
+      const { cart } = await this.prismaService.order.findUniqueOrThrow({
+        where: {
+          id: orderId,
+          status: OrderStatus.PENDING,
+        },
+        select: {
+          id: true,
+          cart: {
+            select: {
+              cart_item: {
+                select: {
+                  product_id: true,
+                  quantity: true,
                 },
               },
             },
           },
-        })
+        },
+      });
 
       const cartItem: Partial<Cart_item>[] = cart.cart_item;
 
@@ -99,16 +100,16 @@ export class OrderService extends WorkerHost {
 
           await tx.order.update({
             where: {
-              id: orderId
+              id: orderId,
             },
             data: {
               status: OrderStatus.FINISHED,
-              updated_at: new Date()
-            }
-          })
+              updated_at: new Date(),
+            },
+          });
         },
       );
-    } catch(error) {
+    } catch (error) {
       await this.prismaService.order.update({
         where: {
           id: orderId,
@@ -155,9 +156,9 @@ export class OrderService extends WorkerHost {
 
     const product: Product = await tx.product.findUnique({
       where: {
-        id: item.product_id
-      }
-    })
+        id: item.product_id,
+      },
+    });
 
     await tx.inventory.update({
       where: {
@@ -174,25 +175,25 @@ export class OrderService extends WorkerHost {
         order_id: orderId,
         priceUnit: product.price,
         product_id: product.id,
-        quantity: item.quantity
-      }
-    })
+        quantity: item.quantity,
+      },
+    });
   }
 
-  async findByUserId(userId: number){
+  async findByUserId(userId: number) {
     try {
       const orders = await this.prismaService.order.findMany({
         where: {
-          user_id: userId
+          user_id: userId,
         },
         include: {
-          order_items: true
-        }
-      })
+          order_items: true,
+        },
+      });
 
-      return orders
+      return orders;
     } catch {
-      throw new BadRequestException('Error on find orders')
+      throw new BadRequestException('Error on find orders');
     }
   }
 }

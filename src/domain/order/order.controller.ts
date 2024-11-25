@@ -1,4 +1,11 @@
-import { Controller, Get, HttpCode, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpCode,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { OrderService } from './order.service';
 import { Request } from 'express';
 import { AuthGuard } from 'src/domain/auth/auth.guard';
@@ -16,7 +23,7 @@ export class OrderController {
   @ApiResponse({
     status: 201,
     description: 'Create order',
-    type: ResponseCreateOrderDTO
+    type: ResponseCreateOrderDTO,
   })
   create(@Req() request: Request) {
     const userId = request['userId'];
@@ -27,10 +34,10 @@ export class OrderController {
   @ApiResponse({
     status: 201,
     description: 'Returns all order',
-    type: [ResponseGetOrderDTO]
+    type: [ResponseGetOrderDTO],
   })
   @HttpCode(200)
-  findAll(@Req() request: Request){
+  findAll(@Req() request: Request) {
     const userId = request['userId'];
     return this.orderService.findByUserId(userId);
   }

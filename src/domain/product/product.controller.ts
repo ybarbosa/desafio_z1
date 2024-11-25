@@ -20,11 +20,11 @@ export class ProductController {
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: 200,
-    type: [ResponseGetProductDto]
+    type: [ResponseGetProductDto],
   })
   @ApiResponse({
     status: 200,
-    description: 'Returns all products'
+    description: 'Returns all products',
   })
   findAll() {
     return this.productService.findAll();

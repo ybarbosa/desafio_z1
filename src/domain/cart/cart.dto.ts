@@ -1,9 +1,9 @@
 import { IsArray, IsDate, IsNumber, IsObject, IsString } from 'class-validator';
-import { ApiProperty, PartialType } from "@nestjs/swagger";
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 enum cartStatus {
   ACTIVE,
-  FINISHED
+  FINISHED,
 }
 
 class CartDto {
@@ -12,51 +12,51 @@ class CartDto {
   id: number;
 
   @ApiProperty({
-    enum: ['ACTIVE', 'FINISHED']
+    enum: ['ACTIVE', 'FINISHED'],
   })
   @IsString()
-  status: cartStatus
+  status: cartStatus;
 
   @ApiProperty()
   @IsNumber()
-  user_id: number
+  user_id: number;
 
   @ApiProperty()
   @IsDate()
-  created_at: Date
+  created_at: Date;
 
   @ApiProperty()
   @IsDate()
-  updated_at: Date
+  updated_at: Date;
 }
 
 class CartItem {
   @ApiProperty()
   @IsNumber()
-  cart_id: number
+  cart_id: number;
 
   @ApiProperty()
   @IsNumber()
-  product_id: number
+  product_id: number;
 
   @ApiProperty()
   @IsNumber()
-  quantity: number
-
-   @ApiProperty()
-  @IsDate()
-  created_at: Date
+  quantity: number;
 
   @ApiProperty()
   @IsDate()
-  updated_at: Date
+  created_at: Date;
+
+  @ApiProperty()
+  @IsDate()
+  updated_at: Date;
 }
 
-export class ResponseCreateCartDTO extends PartialType(CartDto){}
+export class ResponseCreateCartDTO extends PartialType(CartDto) {}
 
-export class ResponseGetCartDTO extends PartialType(CartDto){
-  @ApiProperty({ type: [CartItem]})
-  cart_item: CartItem[]
+export class ResponseGetCartDTO extends PartialType(CartDto) {
+  @ApiProperty({ type: [CartItem] })
+  cart_item: CartItem[];
 }
 
 export class RequestCreateCartDto {

@@ -11,7 +11,10 @@ export class AuthController {
   @ApiBody({ description: 'Body login', type: SignInDto })
   @ApiResponse({
     status: 200,
-    example: { token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTczMjQwNTI3OX0.bk2dm1Ccq0dYnRJZAIgp3O8DKJfZJaoZipsQcVzqxYg'}
+    example: {
+      token:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTczMjQwNTI3OX0.bk2dm1Ccq0dYnRJZAIgp3O8DKJfZJaoZipsQcVzqxYg',
+    },
   })
   @Post('login')
   async signIn(@Body() body: SignInDto): Promise<{ token: string }> {

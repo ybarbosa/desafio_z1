@@ -10,9 +10,11 @@ import { upsertCart, removeCartItem } from './cart.types';
 @Injectable()
 export class CartService {
   constructor(private prismaService: PrismaService) {}
-  async upsert(params: upsertCart ): Promise<Cart> {
+  async upsert(params: upsertCart): Promise<Cart> {
     if (params.quantity < 1) {
-      throw new BadRequestException('Quantity must be greater than or equal to 1');
+      throw new BadRequestException(
+        'Quantity must be greater than or equal to 1',
+      );
     }
 
     const product: Product = await this.prismaService.product.findUnique({
@@ -82,7 +84,7 @@ export class CartService {
     });
   }
 
-  async removeCartItem(params:removeCartItem): Promise<void> {
+  async removeCartItem(params: removeCartItem): Promise<void> {
     const cart = await this.findByUserId(params.userId);
 
     if (!cart) {
@@ -92,18 +94,17 @@ export class CartService {
     const cartItem = await this.prismaService.cart_item.findFirst({
       where: {
         cart_id: cart.id,
-        product_id: params.product_id
+        product_id: params.product_id,
       },
       select: {
         cart_id: true,
-        product_id: true
-      }
-    })
+        product_id: true,
+      },
+    });
 
-    if(!cartItem) {
+    if (!cartItem) {
       throw new NotFoundException('cartItem not found');
     }
-
 
     await this.prismaService.cart_item.delete({
       where: {
