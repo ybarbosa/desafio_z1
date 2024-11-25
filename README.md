@@ -49,6 +49,9 @@ User default:
 ###### Solution
 ![](https://i.ibb.co/ZXDVKTg/diagram-solution.jpg)
 
+In the ./docs directory, you will find the architecture diagrams.
+*./docs/collection_postman.json*
+
 ## Endpoints
-In root of the project, there is a JSON file with the Postman collection, in case you want to call the endpoints.
-*./collection_postman.json*
+In folder docs of the project, there is a JSON file with the Postman collection, in case you want to call the endpoints.
+*./docs/collection_postman.json*
