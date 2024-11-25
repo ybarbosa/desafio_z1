@@ -44,7 +44,11 @@ User default:
 
 ## Architecture Overview
 ###### Entity Relationship Diagram
-![](https://i.ibb.co/vjCQxSz/estrutura-db.jpg)
+![](https://i.ibb.co/xhdMPp4/entity-relationship-diagram.png)
 
 ###### Solution
-![](https://i.ibb.co/bznFnZ3/fluxo-z1.jpg)
+![](https://i.ibb.co/ZXDVKTg/diagram-solution.jpg)
+
+## Endpoints
+In root of the project, there is a JSON file with the Postman collection, in case you want to call the endpoints.
+*./collection_postman.json*
