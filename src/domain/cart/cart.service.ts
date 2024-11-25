@@ -11,6 +11,10 @@ import { Cart, Cart_item, CartStatus, Product } from '@prisma/client';
 export class CartService {
   constructor(private prismaService: PrismaService) {}
   async upsert(params: UpsertCartDto & { userId: number }): Promise<Cart> {
+    if (params.quantity < 1) {
+      throw new BadRequestException('Quantity must be greater than or equal to 1');
+    }
+
     const product: Product = await this.prismaService.product.findUnique({
       where: {
         id: params.product_id,
@@ -33,10 +37,6 @@ export class CartService {
   }
 
   async update(params: UpsertCartDto & { cart: Cart }): Promise<Cart> {
-    if (params.quantity < 1) {
-      throw new BadRequestException('Quantity must be greater than or equal to 1');
-    }
-
     try {
       await this.upsertCartItem({
         cartId: params.cart.id,
@@ -137,9 +137,6 @@ export class CartService {
     quantity: number;
     userId: number;
   }): Promise<Cart> {
-    if (params.quantity < 1) {
-      throw new BadRequestException('Quantity must be greater than or equal to 1');
-    }
     try {
       return await this.prismaService.cart.create({
         data: {
