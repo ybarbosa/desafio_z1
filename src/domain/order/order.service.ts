@@ -172,7 +172,7 @@ export class OrderService extends WorkerHost {
     await tx.order_Item.create({
       data: {
         order_id: orderId,
-        price: product.price,
+        priceUnit: product.price,
         product_id: product.id,
         quantity: item.quantity
       }
